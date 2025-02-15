@@ -8,7 +8,7 @@ import {
   TStudent,
   TUserName,
 } from './student.interface';
-import config from '../config';
+import config from '../../config';
 
 // Sub-schema for userName
 const userNameSchema = new Schema<TUserName>({
@@ -25,7 +25,8 @@ const userNameSchema = new Schema<TUserName>({
   lastName: {
     type: String,
     trim: true,
-    required: [true, 'Last name is required.'],
+    required: [true, 'Last Name is required'],
+    maxLength: [20, 'Name can not be more than 20 characters'],
   },
 });
 
@@ -88,6 +89,13 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       type: String,
       required: [true, 'Student ID is required.'],
       unique: true,
+    },
+    // here we use User model for referencing
+    user: {
+      type: Schema.Types.ObjectId,
+      required: [true, 'User id is required'],
+      unique: true,
+      ref: 'User',
     },
     password: {
       type: String,
@@ -153,14 +161,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     profileImg: {
       type: String,
     },
-    isActive: {
-      type: String,
-      enum: {
-        values: ['active', 'blocked'],
-        message: '{VALUE} is not a valid status.',
-      },
-      default: 'active',
-    },
+
     isDeleted: {
       type: Boolean,
       default: false,
@@ -220,10 +221,10 @@ studentSchema.pre('aggregate', function (next) {
   next();
 });
 
-// creating custom static methods
-studentSchema.statics.isUserExist = async function (id: string) {
-  const userExist = await Student.findOne({ id });
-  return userExist;
+//creating a custom static method
+studentSchema.statics.isUserExists = async function (id: string) {
+  const existingUser = await Student.findOne({ id });
+  return existingUser;
 };
 
 export const Student = model<TStudent, StudentModel>('Student', studentSchema);

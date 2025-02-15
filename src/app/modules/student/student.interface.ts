@@ -1,8 +1,8 @@
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 export type TUserName = {
   firstName: string;
-  middleName?: string;
+  middleName: string;
   lastName: string;
 };
 
@@ -24,6 +24,7 @@ export type TLocalGuardian = {
 
 export type TStudent = {
   id: string;
+  user: Types.ObjectId; //for referencing
   password: string;
   name: TUserName;
   gender: 'male' | 'female' | 'other';
@@ -32,17 +33,28 @@ export type TStudent = {
   contactNo: string;
   emergencyContactNo: string;
   bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
-  //union of string literals
   presentAddress: string;
   permanentAddress: string;
   guardian: TGuardian;
   localGuardian: TLocalGuardian;
   profileImg?: string;
-  isActive: 'active' | 'blocked';
   isDeleted: boolean;
 };
 
-// creating custom static method
+//for creating static
+
 export interface StudentModel extends Model<TStudent> {
-  isUserExist(id: string): Promise<TStudent | null>;
+  isUserExists(id: string): Promise<TStudent | null>;
 }
+
+// for creating instance
+
+// export interface StudentMethods {
+//   isUserExists(id: string): Promise<TStudent | null>;
+// }
+
+// export type StudentModel = Model<
+//   TStudent,
+//   Record<string, never>,
+//   StudentMethods
+// >;
