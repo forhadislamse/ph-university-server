@@ -1,6 +1,6 @@
 import { model, Schema } from 'mongoose';
 import validator from 'validator';
-import bcrypt from 'bcrypt';
+// import bcrypt from 'bcrypt';
 import {
   StudentModel,
   TGuardian,
@@ -8,7 +8,7 @@ import {
   TStudent,
   TUserName,
 } from './student.interface';
-import config from '../../config';
+// import config from '../../config';
 
 // Sub-schema for userName
 const userNameSchema = new Schema<TUserName>({
@@ -97,11 +97,12 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       unique: true,
       ref: 'User',
     },
-    password: {
-      type: String,
-      required: [true, 'Student password is required.'],
-      maxLength: [20, 'password must be 20 characters'],
-    },
+    // password in User model
+    // password: {
+    //   type: String,
+    //   required: [true, 'Student password is required.'],
+    //   maxLength: [20, 'password must be 20 characters'],
+    // },
     name: {
       type: userNameSchema,
       required: [true, 'Name is required.'],
@@ -181,7 +182,7 @@ studentSchema.virtual('fullName').get(function () {
 // middleware/hooks
 // document middleware
 
-studentSchema.pre('save', async function (next) {
+/* studentSchema.pre('save', async function (next) {
   // console.log(this, 'we wil save the date');
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const user = this;
@@ -197,7 +198,7 @@ studentSchema.post('save', function (doc, next) {
   // console.log(doc, 'data saved');
   doc.password = '';
   next();
-});
+}); */
 
 //query middleware
 
