@@ -97,12 +97,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       unique: true,
       ref: 'User',
     },
-    // password in User model
-    // password: {
-    //   type: String,
-    //   required: [true, 'Student password is required.'],
-    //   maxLength: [20, 'password must be 20 characters'],
-    // },
+
     name: {
       type: userNameSchema,
       required: [true, 'Name is required.'],
@@ -180,25 +175,6 @@ studentSchema.virtual('fullName').get(function () {
 });
 
 // middleware/hooks
-// document middleware
-
-/* studentSchema.pre('save', async function (next) {
-  // console.log(this, 'we wil save the date');
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const user = this;
-  user.password = await bcrypt.hash(
-    user.password,
-    Number(config.bcrypt_salt_rounds),
-  );
-  next();
-});
-
-studentSchema.post('save', function (doc, next) {
-  // console.log(this, 'data saved');
-  // console.log(doc, 'data saved');
-  doc.password = '';
-  next();
-}); */
 
 //query middleware
 

@@ -10,10 +10,7 @@ const createStudent = async (
   next: NextFunction,
 ) => {
   try {
-    const { password, student: studentData } = req.body; //destructure (req.body.student) name alias
-
-    // const zodParsedData = studentValidationSchema.parse(studentData);
-    // const result = await UserServices.createStudentIntoDB(zodParsedData);
+    const { password, student: studentData } = req.body;
 
     const result = await UserServices.createStudentIntoDB(
       password,

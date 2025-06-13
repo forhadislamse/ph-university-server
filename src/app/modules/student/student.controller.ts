@@ -10,11 +10,7 @@ const getAllStudents = async (
 ) => {
   try {
     const result = await StudentServices.getAllStudentsFromDB();
-    // res.status(200).json({
-    //   success: true,
-    //   message: 'Student are retrieved succesfully',
-    //   data: result,
-    // });
+
     // using generic
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -25,14 +21,6 @@ const getAllStudents = async (
   } catch (err) {
     next(err); //using global handler
   }
-  /* catch (err: any) {
-    res.status(400).json({
-      success: false,
-      message: err.message || 'something went wrong',
-      error: err,
-    });
-    // console.log(err);
-  } */
 };
 
 const getSingleStudent = async (
