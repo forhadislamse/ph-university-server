@@ -162,6 +162,10 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       type: Schema.Types.ObjectId,
       ref: 'AcademicSemester',
     },
+    academicDepartment: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicDepartment',
+    },
     isDeleted: {
       type: Boolean,
       default: false,
@@ -204,8 +208,7 @@ studentSchema.pre('aggregate', function (next) {
 
 //creating a custom static method
 studentSchema.statics.isUserExists = async function (id: string) {
-  const existingUser = await Student.findOne({ id });
-  return existingUser;
+  return await Student.findOne({ id }); //isDeleted:false
 };
 
 export const Student = model<TStudent, StudentModel>('Student', studentSchema);

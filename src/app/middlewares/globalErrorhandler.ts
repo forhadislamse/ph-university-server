@@ -9,16 +9,22 @@ const globalErrorHandler = (
   res: Response,
   next: NextFunction,
 ) => {
-  const statusCode = 500;
+  const statusCode = err.statusCode || 500;
   const message = err.message || 'Something went wrong!';
-
-  // return res.status(statusCode).json({ //error shows No overload matches this call.
-  // Send the error response without 'return'
   res.status(statusCode).json({
     success: false,
     message,
     error: err,
+    // error: {
+    //   name: err.name,
+    //   stack: process.env.NODE_ENV !== 'production' ? err.stack : undefined,
+    // },
   });
 };
 
 export default globalErrorHandler;
+
+// error: {
+//     name: err.name,
+//     stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
+//   },
