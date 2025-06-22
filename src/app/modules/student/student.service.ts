@@ -56,21 +56,6 @@ const updateStudentIntoDb = async (id: string, payload: Partial<TStudent>) => {
   }
   // console.log(modifiedData);
 
-  /* const flattenNestedField = (
-    fieldData: Record<string, unknown> | undefined, //nested object for name, guardian etc
-    fieldName: string,
-    target: Record<string, unknown>,
-  ) => {
-    if (fieldData && Object.keys(fieldData).length) {
-      for (const [key, value] of Object.entries(fieldData)) {
-        target[`${fieldName}.${key}`] = value;
-      }
-    }
-  };
-  flattenNestedField(name, 'name', modifiedData);
-  flattenNestedField(guardian, 'guardian', modifiedData);
-  flattenNestedField(localGuardian, 'localGuardian', modifiedData); */
-
   const result = await Student.findOneAndUpdate(
     { id, isDeleted: false },
     modifiedData,

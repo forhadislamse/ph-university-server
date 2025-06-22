@@ -1,6 +1,6 @@
 import { model, Schema } from 'mongoose';
 import validator from 'validator';
-// import bcrypt from 'bcrypt';
+
 import {
   StudentModel,
   TGuardian,

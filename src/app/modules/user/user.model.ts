@@ -32,11 +32,6 @@ const userSchema = new Schema<TUser>(
       type: Boolean,
       default: false,
     },
-    // for this,mongoose automatically set timestamps:true for createdAt and updatedAt
-    // createdAt:{
-    //   type:Date,
-    //   default:Date.now()
-    // }
   },
   {
     timestamps: true,

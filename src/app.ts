@@ -1,7 +1,5 @@
 import express, { Application, Request, Response } from 'express';
 // import cors from 'cors';
-// import { StudentRoutes } from './app/modules/student/student.route';
-// import { UserRoutes } from './app/modules/user/user.routes';
 import globalErrorHandler from './app/middlewares/globalErrorhandler';
 import notFound from './app/middlewares/notFound';
 import router from './app/routes';
@@ -26,7 +24,6 @@ const tester = (req: Request, res: Response) => {
 };
 app.get('/', tester);
 
-// console.log(process.(cwd));
 app.use(globalErrorHandler);
 app.use(notFound);
 export default app;

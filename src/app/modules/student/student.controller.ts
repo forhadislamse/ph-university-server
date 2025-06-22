@@ -4,8 +4,6 @@ import { StudentServices } from './student.service';
 import sendResponse from '../../utils/sendResponse';
 import catchAsync from '../../utils/catchAsync';
 
-//use RequestHandler for res,req,next like we use function type in typescript
-
 const getAllStudents = catchAsync(async (req, res) => {
   const result = await StudentServices.getAllStudentsFromDB();
 
