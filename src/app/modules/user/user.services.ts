@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import mongoose from 'mongoose';
 import httpStatus from 'http-status';
 import config from '../../config';
@@ -54,10 +54,10 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
     await session.commitTransaction();
     await session.endSession();
     return newStudent;
-  } catch (err) {
+  } catch (err: any) {
     await session.abortTransaction();
     await session.endSession();
-    throw new Error('Failed to new create student');
+    throw new Error(err);
   }
 };
 export const UserServices = {

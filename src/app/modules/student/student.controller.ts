@@ -5,7 +5,8 @@ import sendResponse from '../../utils/sendResponse';
 import catchAsync from '../../utils/catchAsync';
 
 const getAllStudents = catchAsync(async (req, res) => {
-  const result = await StudentServices.getAllStudentsFromDB();
+  // console.log(req.query);
+  const result = await StudentServices.getAllStudentsFromDB(req.query);
 
   // using generic
   sendResponse(res, {
