@@ -31,7 +31,8 @@ const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
 };
 
 const getSingleStudentFromDB = async (id: string) => {
-  const result = await Student.findOne({ id })
+  // const result = await Student.findOne({ id })
+  const result = await Student.findById(id)
     .populate('admissionSemester')
     .populate({
       path: 'academicDepartment',
@@ -42,7 +43,6 @@ const getSingleStudentFromDB = async (id: string) => {
   if (!result) {
     throw new Error('student does not exist');
   }
-  // const result = await Student.findById(id);// for objectID
   return result;
 };
 
@@ -68,8 +68,8 @@ const updateStudentIntoDb = async (id: string, payload: Partial<TStudent>) => {
   }
   // console.log(modifiedData);
 
-  const result = await Student.findOneAndUpdate(
-    { id, isDeleted: false },
+  const result = await Student.findByIdAndUpdate(
+    { _id: id, isDeleted: false },
     modifiedData,
     { new: true, runValidators: true },
   );
@@ -77,31 +77,37 @@ const updateStudentIntoDb = async (id: string, payload: Partial<TStudent>) => {
 };
 
 const deleteStudentFromDB = async (id: string) => {
+  // 1. Validate ID format (no transaction needed)
+  if (!mongoose.isValidObjectId(id)) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Invalid student ID format');
+  }
+
+  // 2. Using the static method to check if student exists (still outside transaction)
+  const existingStudent = await Student.isUserExists(id);
+  if (!existingStudent || existingStudent.isDeleted) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'Student does not exist or has already been deleted',
+    );
+  }
   const session = await mongoose.startSession();
   try {
     // findById for mongoose objectId
     session.startTransaction();
     // // 1. Use the static method to check if student exists
-    const existingStudent = await Student.isUserExists(id);
 
-    if (!existingStudent || existingStudent.isDeleted) {
-      throw new AppError(
-        httpStatus.NOT_FOUND,
-        'Student does not exist or has already been deleted',
-      );
-    }
-
-    const deletedStudent = await Student.findOneAndUpdate(
-      { id },
+    const deletedStudent = await Student.findByIdAndUpdate(
+      id,
       { isDeleted: true },
       { new: true },
     );
     if (!deletedStudent) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete student');
     }
+    const userId = deletedStudent.user;
 
-    const deletedUser = await User.findOneAndUpdate(
-      { id },
+    const deletedUser = await User.findByIdAndUpdate(
+      userId,
       { isDeleted: true },
       { new: true, session },
     );
@@ -109,13 +115,16 @@ const deleteStudentFromDB = async (id: string) => {
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete user');
     }
     await session.commitTransaction();
-    await session.endSession();
+    // await session.endSession();
     return deletedStudent;
   } catch (err) {
     await session.abortTransaction();
-    await session.endSession();
+    // await session.endSession();
+
     // throw new Error('Failed to delete students');
     throw err;
+  } finally {
+    await session.endSession();
   }
 };
 export const StudentServices = {
