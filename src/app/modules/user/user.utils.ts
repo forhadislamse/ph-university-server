@@ -22,7 +22,7 @@ const findLastStudentId = async (payload: TAcademicSemester) => {
 export const generateStudentId = async (payload: TAcademicSemester) => {
   // first time 0000
   //0001  => 1
-  let currentId = (0).toString(); // 0000 by deafult
+  let currentId = (0).toString(); // 0 by default
 
   const lastStudentId = await findLastStudentId(payload);
   // 2030 01 0005
@@ -113,40 +113,3 @@ export const generateAdminId = async () => {
   incrementId = `A-${incrementId}`;
   return incrementId;
 };
-
-//
-// import { TAcademicSemester } from '../academicSemester/academicSemester.interface';
-// import { User } from './user.model';
-
-// /**
-//  * Find the last student ID for the current academic semester
-//  * Only matches students whose ID starts with the current semester's year + code
-//  */
-// const findLastStudentId = async (payload: TAcademicSemester) => {
-//   const semesterPrefix = `${payload.year}${payload.code}`; // e.g. "203001"
-
-//   const lastStudent = await User.findOne(
-//     {
-//       role: 'student',
-//       id: { $regex: `^${semesterPrefix}` }, // match only current semester students
-//     },
-//     {
-//       id: 1,
-//       _id: 0,
-//     },
-//   )
-//     .sort({ createdAt: -1 }) // latest student first
-//     .lean();
-
-//   return lastStudent?.id ? lastStudent.id.substring(6) : undefined; // return last 4 digits
-// };
-
-// /**
-//  * Generate a new student ID using semester prefix + 4-digit serial
-//  * Starts from 0001 if new semester, otherwise increments
-//  */
-// export const generateStudentId = async (payload: TAcademicSemester) => {
-//   const currentId = (await findLastStudentId(payload)) || '0000'; // start from 0000
-//   const serial = (Number(currentId) + 1).toString().padStart(4, '0'); // e.g. "0005"
-//   return `${payload.year}${payload.code}${serial}`; // e.g. "2030010005"
-// };

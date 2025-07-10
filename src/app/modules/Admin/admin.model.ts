@@ -114,11 +114,6 @@ adminSchema.pre('findOne', function (next) {
   next();
 });
 
-adminSchema.pre('aggregate', function (next) {
-  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
-  next();
-});
-
 //checking if user is already exist!
 adminSchema.statics.isUserExists = async function (id: string) {
   const existingUser = await Admin.findById(id);

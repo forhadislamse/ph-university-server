@@ -5,7 +5,7 @@ import { Server } from 'http';
 
 let server: Server;
 process.on('uncaughtException', (error) => {
-  console.error('😈 uncaughtException is detected , shutting down', error);
+  console.error('uncaughtException is detected , shutting down', error);
   process.exit(1);
 });
 // console.log(object);
@@ -22,9 +22,7 @@ async function main() {
 main();
 
 process.on('unhandledRejection', (reason) => {
-  console.error(
-    `😈 unhandledRejection is detected , shutting down ...${reason}`,
-  );
+  console.error(`unhandledRejection is detected , shutting down ...${reason}`);
   if (server) {
     server.close(() => {
       process.exit(1);

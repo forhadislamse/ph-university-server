@@ -101,11 +101,7 @@ const facultySchema = new Schema<TFaculty, FacultyModel>(
       ref: 'AcademicDepartment',
       required: [true, 'Academic Department is required'],
     },
-    // academicDepartment: {
-    //   type: Schema.Types.ObjectId,
-    //   required: [true, 'User id is required'],
-    //   ref: 'User',
-    // },
+
     isDeleted: {
       type: Boolean,
       default: false,
@@ -137,12 +133,6 @@ facultySchema.pre('findOne', function (next) {
   next();
 });
 
-// // [ {$match: { isDeleted : {  $ne: : true}}}   ,{ '$match': { id: '123456' } } ]
-
-facultySchema.pre('aggregate', function (next) {
-  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
-  next();
-});
 //checking if user is already exist!
 facultySchema.statics.isUserExists = async function (id: string) {
   return await Faculty.findById(id); //isDeleted:false

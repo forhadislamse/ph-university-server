@@ -26,7 +26,7 @@ const updateAcademicSemesterIntoDb = async (
   id: string,
   payload: Partial<TAcademicSemester>,
 ) => {
-  // duita condition dile kaj krbe
+  // use both condition
   if (
     payload.name &&
     payload.code &&

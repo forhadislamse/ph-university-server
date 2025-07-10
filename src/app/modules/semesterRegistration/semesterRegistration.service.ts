@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import mongoose from 'mongoose';
 import QueryBuilder from '../../builder/QueryBuilder';
 import AppError from '../../errors/AppError';
@@ -11,13 +12,6 @@ import { OfferedCourse } from '../offeredCourse/offeredCourse.model';
 const createSemesterRegistrationIntoDB = async (
   payload: TSemesterRegistration,
 ) => {
-  /**
-   * Step1: Check if there any registered semester that is already 'UPCOMING'|'ONGOING'
-   * Step2: Check if the semester is exist
-   * Step3: Check if the semester is already registered!
-   * Step4: Create the semester registration
-   */
-
   const academicSemester = payload?.academicSemester;
 
   //check if there any registered semester that is already 'UPCOMING'|'ONGOING'
@@ -91,24 +85,13 @@ const updateSemesterRegistrationIntoDB = async (
   id: string,
   payload: Partial<TSemesterRegistration>,
 ) => {
-  console.log('Incoming ID:', id);
-  console.log('Incoming Payload:', payload);
-  /**
-   * Step1: Check if the semester is exist
-   * Step2: Check if the requested registered semester is exists
-   * Step3: If the requested semester registration is ended, we will not update anything
-   * Step4: If the requested semester registration is 'UPCOMING', we will let update everything.
-   * Step5: If the requested semester registration is 'ONGOING', we will not update anything  except status to 'ENDED'
-   * Step6: If the requested semester registration is 'ENDED' , we will not update anything
-   *
-   * UPCOMING --> ONGOING --> ENDED
-   *
-   */
+  // console.log('Incoming ID:', id);
+  // console.log('Incoming Payload:', payload);
 
   // check if the requested registered semester is exists
   // check if the semester is already registered!
   const isSemesterRegistrationExists = await SemesterRegistration.findById(id);
-  console.log('Found semester registration:', isSemesterRegistrationExists);
+  // console.log('Found semester registration:', isSemesterRegistrationExists);
   if (!isSemesterRegistrationExists) {
     throw new AppError(httpStatus.NOT_FOUND, 'This semester is not found !');
   }
@@ -116,8 +99,8 @@ const updateSemesterRegistrationIntoDB = async (
   //if the requested semester registration is ended , we will not update anything
   const currentSemesterStatus = isSemesterRegistrationExists?.status;
   const requestedStatus = payload?.status;
-  console.log('Current Status:', currentSemesterStatus);
-  console.log('Requested Status:', requestedStatus);
+  // console.log('Current Status:', currentSemesterStatus);
+  // console.log('Requested Status:', requestedStatus);
   if (currentSemesterStatus === RegistrationStatus.ENDED) {
     throw new AppError(
       httpStatus.BAD_REQUEST,
@@ -155,12 +138,6 @@ const updateSemesterRegistrationIntoDB = async (
 };
 
 const deleteSemesterRegistrationFromDB = async (id: string) => {
-  /**
-  * Step1: Delete all associated offered courses.
-  * Step2: Delete semester registration when the status is
-  'UPCOMING'.
-  **/
-
   // checking if the semester registration is exist
   const isSemesterRegistrationExists = await SemesterRegistration.findById(id);
 

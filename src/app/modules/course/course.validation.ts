@@ -15,9 +15,7 @@ const createCourseValidationSchema = z.object({
     isDeleted: z.boolean().optional(),
   }),
 });
-// const updateCourseValidationSchema = z.object({
-//   body: createCourseValidationSchema.shape.body.partial(),
-// });
+
 const updatePreRequisiteCourseValidationSchema = z.object({
   course: z.string(),
   isDeleted: z.boolean().optional(),
@@ -34,23 +32,6 @@ const updateCourseValidationSchema = z.object({
     isDeleted: z.boolean().optional(),
   }),
 });
-
-/* How to combine both:
-
-const updatePreRequisiteCourseValidationSchema = z.object({
-  course: z.string(),
-  isDeleted: z.boolean().optional(),
-});
-
-const updateCourseValidationSchema = z.object({
-  body: createCourseValidationSchema.shape.body
-    .partial()
-    .extend({
-      preRequisiteCourses: z
-        .array(updatePreRequisiteCourseValidationSchema)
-        .optional(),
-    }),
-}); */
 
 const facultiesWithCourseValidationSchema = z.object({
   body: z.object({

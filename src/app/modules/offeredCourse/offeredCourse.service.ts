@@ -24,19 +24,6 @@ const createOfferedCourseIntoDB = async (payload: TOfferedCourse) => {
   } = payload;
   // console.log('\n Incoming Payload:', payload);
 
-  /**
-   * Step 1: check if the semester registration id is exists!
-   * Step 2: check if the academic faculty id is exists!
-   * Step 3: check if the academic department id is exists!
-   * Step 4: check if the course id is exists!
-   * Step 5: check if the faculty id is exists!
-   * Step 6: check if the department is belong to the  faculty
-   * Step 7: check if the same offered course same section in same registered semester exists
-   * Step 8: get the schedules of the faculties
-   * Step 9: check if the faculty is available at that time. If not then throw error
-   * Step 10: create the offered course
-   */
-
   //check if the semester registration id is exists!
   const isSemesterRegistrationExits =
     await SemesterRegistration.findById(semesterRegistration);
@@ -163,13 +150,6 @@ const updateOfferedCourseIntoDB = async (
     'faculty' | 'maxCapacity' | 'days' | 'startTime' | 'endTime'
   >,
 ) => {
-  /**
-   * Step 1: check if the offered course exists
-   * Step 2: check if the faculty exists
-   * Step 3: check if the semester registration status is upcoming
-   * Step 4: check if the faculty is available at that time. If not then throw error
-   * Step 5: update the offered course
-   */
   const { faculty, days, startTime, endTime } = payload;
 
   const isOfferedCourseExists = await OfferedCourse.findById(id);
@@ -223,11 +203,6 @@ const updateOfferedCourseIntoDB = async (
   return result;
 };
 const deleteOfferedCourseFromDB = async (id: string) => {
-  /**
-   * Step 1: check if the offered course exists
-   * Step 2: check if the semester registration status is upcoming
-   * Step 3: delete the offered course
-   */
   const isOfferedCourseExists = await OfferedCourse.findById(id);
 
   if (!isOfferedCourseExists) {
