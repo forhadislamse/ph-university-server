@@ -133,7 +133,7 @@ const createAdminIntoDB = async (password: string, payload: TAdmin) => {
 
   //if password is not given , use default password
   userData.password = password || (config.default_password as string);
-
+  // console.log(userData.password);
   //set student role
   userData.role = 'admin';
 
