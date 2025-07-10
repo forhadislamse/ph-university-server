@@ -1,11 +1,12 @@
 {
-  "name": "first-project",
+  "name": "university-management-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/server.js",
   "scripts": {
     "build": "tsc",
-    "start:prod": "node ./dist/server.js",
+    "start": "node ./dist/server.js",
+    "start:prod": "nodemon ./dist/server.js",
     "start:dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "lint": "npx eslint src --ignore-pattern .ts",
     "lint:fix": "npx eslint src --fix",
