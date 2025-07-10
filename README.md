@@ -245,3 +245,13 @@ To automatically fix prettier issues, use:
             sendResponse.ts
 
 ```
+
+## API Endpoints
+
+**User Routes**
+
+| Method | Endpoint                       | Description             |
+| ------ | ------------------------------ | ----------------------- |
+| POST   | `/api/v1/users/create-student` | Create new student user |
+| POST   | `/api/v1/users/create-faculty` | Create new faculty user |
+| POST   | `/api/v1/users/create-admin`   | Create new admin user   |
