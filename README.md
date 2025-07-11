@@ -291,33 +291,30 @@ To automatically fix prettier issues, use:
 
 **5. Academic Semester:**
 
-| Method | Endpoint                                              | Description                      |
-| ------ | ----------------------------------------------------- | -------------------------------- | --------------- | --- |
-| POST   | `/api/v1/academic-semesters/create-academic-semester` | Create semester                  |
-| GET    | `/api/v1/academic-semesters`                          | Get all semesters                |
-| GET    | `/api/v1/academic-semesters/:id`                      | Get semester by ID               |
-| PATCH  | `/api/v1/academic-semesters/:id`                      | Update semester                  |
-| <!--   | DELETE                                                | `/api/v1/academic-semesters/:id` | Delete semester | --> |
+| Method | Endpoint                                              | Description        |
+| ------ | ----------------------------------------------------- | ------------------ |
+| POST   | `/api/v1/academic-semesters/create-academic-semester` | Create semester    |
+| GET    | `/api/v1/academic-semesters`                          | Get all semesters  |
+| GET    | `/api/v1/academic-semesters/:id`                      | Get semester by ID |
+| PATCH  | `/api/v1/academic-semesters/:id`                      | Update semester    |
 
 **6. Academic Faculty:**
 
-| Method | Endpoint                                             | Description                      |
-| ------ | ---------------------------------------------------- | -------------------------------- | -------------- | --- |
-| POST   | `/api/v1/academic-faculties/create-academic-faculty` | Create faculty                   |
-| GET    | `/api/v1/academic-faculties`                         | Get all faculties                |
-| GET    | `/api/v1/academic-faculties/:id`                     | Get by ID                        |
-| PATCH  | `/api/v1/academic-faculties/:id`                     | Update faculty                   |
-| <!--   | DELETE                                               | `/api/v1/academic-faculties/:id` | Delete faculty | --> |
+| Method | Endpoint                                             | Description       |
+| ------ | ---------------------------------------------------- | ----------------- |
+| POST   | `/api/v1/academic-faculties/create-academic-faculty` | Create faculty    |
+| GET    | `/api/v1/academic-faculties`                         | Get all faculties |
+| GET    | `/api/v1/academic-faculties/:id`                     | Get by ID         |
+| PATCH  | `/api/v1/academic-faculties/:id`                     | Update faculty    |
 
 **7. Academic Department:**
 
-| Method | Endpoint                                                  | Description                        |
-| ------ | --------------------------------------------------------- | ---------------------------------- | ----------------- | --- |
-| POST   | `/api/v1/academic-departments/create-academic-department` | Create department                  |
-| GET    | `/api/v1/academic-departments`                            | Get all departments                |
-| GET    | `/api/v1/academic-departments/:id`                        | Get by ID                          |
-| PATCH  | `/api/v1/academic-departments/:id`                        | Update department                  |
-| <!--   | DELETE                                                    | `/api/v1/academic-departments/:id` | Delete department | --> |
+| Method | Endpoint                                                  | Description         |
+| ------ | --------------------------------------------------------- | ------------------- |
+| POST   | `/api/v1/academic-departments/create-academic-department` | Create department   |
+| GET    | `/api/v1/academic-departments`                            | Get all departments |
+| GET    | `/api/v1/academic-departments/:id`                        | Get by ID           |
+| PATCH  | `/api/v1/academic-departments/:id`                        | Update department   |
 
 **8. Course:**
 
