@@ -10,7 +10,9 @@ A full-featured backend API for managing users (Admin, Student, Faculty), academ
 - [Features](#features)
 - [Technology Used](#technology-used)
 - [Folder Structure](#folder-structure)
+- [Entity Relationship Diagram (ERD)](#entity-relationship-diagram-erd)
 - [API Endpoints](#api-endpoints)
+- [Error Handling](#error-handling)
 - [Licenses](#licenses)
 
 ## Requirements
@@ -246,6 +248,10 @@ To automatically fix prettier issues, use:
 
 ```
 
+## Entity Relationship Diagram (ERD)
+
+![ER Diagram](./Final.png)
+
 ## API Endpoints
 
 **1. User Routes:**
@@ -282,3 +288,188 @@ To automatically fix prettier issues, use:
 | GET    | `/api/v1/faculties/:id` | Get single faculty                                                                        |
 | PATCH  | `/api/v1/faculties/:id` | Update faculty info                                                                       |
 | DELETE | `/api/v1/faculties/:id` | Delete a faculty                                                                          |
+
+**5. Academic Semester:**
+
+| Method | Endpoint                                              | Description                      |
+| ------ | ----------------------------------------------------- | -------------------------------- | --------------- | --- |
+| POST   | `/api/v1/academic-semesters/create-academic-semester` | Create semester                  |
+| GET    | `/api/v1/academic-semesters`                          | Get all semesters                |
+| GET    | `/api/v1/academic-semesters/:id`                      | Get semester by ID               |
+| PATCH  | `/api/v1/academic-semesters/:id`                      | Update semester                  |
+| <!--   | DELETE                                                | `/api/v1/academic-semesters/:id` | Delete semester | --> |
+
+**6. Academic Faculty:**
+
+| Method | Endpoint                                             | Description                      |
+| ------ | ---------------------------------------------------- | -------------------------------- | -------------- | --- |
+| POST   | `/api/v1/academic-faculties/create-academic-faculty` | Create faculty                   |
+| GET    | `/api/v1/academic-faculties`                         | Get all faculties                |
+| GET    | `/api/v1/academic-faculties/:id`                     | Get by ID                        |
+| PATCH  | `/api/v1/academic-faculties/:id`                     | Update faculty                   |
+| <!--   | DELETE                                               | `/api/v1/academic-faculties/:id` | Delete faculty | --> |
+
+**7. Academic Department:**
+
+| Method | Endpoint                                                  | Description                        |
+| ------ | --------------------------------------------------------- | ---------------------------------- | ----------------- | --- |
+| POST   | `/api/v1/academic-departments/create-academic-department` | Create department                  |
+| GET    | `/api/v1/academic-departments`                            | Get all departments                |
+| GET    | `/api/v1/academic-departments/:id`                        | Get by ID                          |
+| PATCH  | `/api/v1/academic-departments/:id`                        | Update department                  |
+| <!--   | DELETE                                                    | `/api/v1/academic-departments/:id` | Delete department | --> |
+
+**8. Course:**
+
+| Method | Endpoint                                     | Description       |
+| ------ | -------------------------------------------- | ----------------- |
+| POST   | `/api/v1/courses/create-course`              | Create course     |
+| GET    | `/api/v1/courses`                            | Get all courses   |
+| GET    | `/api/v1/courses/:id`                        | Get single course |
+| PATCH  | `/api/v1/courses/:id`                        | Update course     |
+| DELETE | `/api/v1/courses/:id`                        | Delete course     |
+| PUT    | `/api/v1/courses/:courseId/assign-faculties` | Assign faculty    |
+| DELETE | `/api/v1/courses/:courseId/remove-faculties` | Remove faculty    |
+
+**9. Semester Registration:**
+
+| Method | Endpoint                                                      | Description                       |
+| ------ | ------------------------------------------------------------- | --------------------------------- |
+| POST   | `/api/v1/semester-registrations/create-semester-registration` | Create registration               |
+| GET    | `/api/v1/semester-registrations`                              | Get all registrations             |
+| GET    | `/api/v1/semester-registrations/:id`                          | Get one registration              |
+| PATCH  | `/api/v1/semester-registrations/:id`                          | Update registration               |
+| DELETE | `/api/v1/semester-registrations/:id`                          | Delete registration (if UPCOMING) |
+
+**10. Offered Course:**
+
+| Method | Endpoint                                        | Description                           |
+| ------ | ----------------------------------------------- | ------------------------------------- |
+| POST   | `/api/v1/offered-courses/create-offered-course` | Create new offered course             |
+| GET    | `/api/v1/offered-courses`                       | Get all offered courses               |
+| GET    | `/api/v1/offered-courses/:id`                   | Get single offered course             |
+| PATCH  | `/api/v1/offered-courses/:id`                   | Update offered course (time, faculty) |
+| DELETE | `/api/v1/offered-courses/:id`                   | Delete offered course                 |
+
+## Error Handling
+
+**Sample global Error Responses example**
+
+**Zod Error**
+Occurs when the request body fails Zod validation (e.g., missing fields or wrong types).
+
+```json
+{
+  "success": false,
+  "message": "Zod Validation Error",
+  "errorSources": [
+    {
+      "path": "dateOfBirth",
+      "message": "Expected string, received number"
+    }
+  ],
+  "stack": null // only in development
+}
+```
+
+**Mongoose Validation Error**
+Occurs when Mongoose schema validation fails (e.g., required field missing in DB schema).
+
+```json
+{
+  "success": false,
+  "message": "Mongoose Validation Error",
+  "errorSources": [
+    {
+      "path": "year",
+      "message": "Path `year` is required."
+    }
+  ],
+  "stack": null
+}
+```
+
+**Cast Error**
+Occurs when an invalid ObjectId is passed in a route param (e.g., /students/123abc)
+
+```json
+{
+  "success": false,
+  "message": "Invalid Id",
+  "errorSources": [
+    {
+      "path": "_id",
+      "message": "Cast to ObjectId failed for value \"6854eac205b8398cf46e1e\" (type string) at path \"_id\" for model \"AcademicSemester\""
+    }
+  ],
+  "stack": null
+}
+```
+
+**Duplicate Error (MongoDB Error Code 11000)**
+Occurs when inserting a document with a unique constraint that already exists.
+
+```json
+{
+  "success": false,
+  "message": "Duplicate entry for name:\"Department of English\"",
+  "errorSources": [
+    {
+      "path": "name",
+      "message": "Department of English already exists"
+    }
+  ],
+  "stack": null // only in development
+}
+```
+
+**AppError (Custom Error)**
+Thrown explicitly using throw new AppError(...), often for business rules.
+
+```json
+{
+  "success": false,
+  "message": "Semester registration is already ENDED",
+  "errorSources": [
+    {
+      "path": "",
+      "message": "Semester registration is already ENDED"
+    }
+  ],
+  "stack": "..."
+}
+```
+
+**Generic JavaScript Error (Error)**
+Any uncaught throw new Error(...).
+
+```json
+{
+  "success": false,
+  "message": "Unexpected failure in processing request",
+  "errorSources": [
+    {
+      "path": "",
+      "message": "Unexpected failure in processing request"
+    }
+  ],
+  "stack": "..."
+}
+```
+
+**Not Found Route**
+if no matching routes then response will be
+
+```json
+{
+  "success": false,
+  "message": "API Not Found !!",
+  "error": ""
+}
+```
+
+## Licenses:
+
+//add this section later
+
+## Happy Coding
