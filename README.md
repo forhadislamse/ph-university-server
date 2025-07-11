@@ -248,10 +248,37 @@ To automatically fix prettier issues, use:
 
 ## API Endpoints
 
-**User Routes**
+**1. User Routes:**
 
 | Method | Endpoint                       | Description             |
 | ------ | ------------------------------ | ----------------------- |
 | POST   | `/api/v1/users/create-student` | Create new student user |
 | POST   | `/api/v1/users/create-faculty` | Create new faculty user |
 | POST   | `/api/v1/users/create-admin`   | Create new admin user   |
+
+**2. Admin Routes:**
+
+| Method | Endpoint             | Description                                                                            |
+| ------ | -------------------- | -------------------------------------------------------------------------------------- |
+| GET    | `/api/v1/admins`     | Get all admins — supports email, searchTerm, fields, sort, page, limit as query params |
+| GET    | `/api/v1/admins/:id` | Get single admin                                                                       |
+| PATCH  | `/api/v1/admins/:id` | Update admin info                                                                      |
+| DELETE | `/api/v1/admins/:id` | Delete an admin                                                                        |
+
+**3. Student Routes:**
+
+| Method | Endpoint               | Description                                                                              |
+| ------ | ---------------------- | ---------------------------------------------------------------------------------------- |
+| GET    | `/api/v1/students`     | Get all students — supports email, searchTerm, fields, sort, page, limit as query params |
+| GET    | `/api/v1/students/:id` | Get single student                                                                       |
+| PATCH  | `/api/v1/students/:id` | Update student info                                                                      |
+| DELETE | `/api/v1/students/:id` | Delete a student                                                                         |
+
+**4. Faculty Routes:**
+
+| Method | Endpoint                | Description                                                                               |
+| ------ | ----------------------- | ----------------------------------------------------------------------------------------- |
+| GET    | `/api/v1/faculties`     | Get all faculties — supports email, searchTerm, fields, sort, page, limit as query params |
+| GET    | `/api/v1/faculties/:id` | Get single faculty                                                                        |
+| PATCH  | `/api/v1/faculties/:id` | Update faculty info                                                                       |
+| DELETE | `/api/v1/faculties/:id` | Delete a faculty                                                                          |
