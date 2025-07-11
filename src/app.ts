@@ -13,9 +13,9 @@ app.use(express.json());
 app.use('/api/v1', router);
 
 const tester = (req: Request, res: Response) => {
-  const a = 100;
+  // const a = 100;
   res.json({
-    data: a, // get data
+    data: 'Hello Backend Developer', // get data
   });
 };
 app.get('/', tester);
